@@ -9,6 +9,7 @@ Prerequisites:
 
 - Docker
 - Python 3.9
+- Git (optional)
 
 Clone the repo
 
