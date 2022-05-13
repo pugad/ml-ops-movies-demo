@@ -1,0 +1,22 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+sklearn = "*"
+fastapi = "==0.74.1"
+uvicorn = {extras = ["standard"], version = "*"}
+pandas = "*"
+matplotlib = "*"
+gunicorn = "==20.1.0"
+jinja2 = "*"
+dask = {extras = ["dataframe"], version = "*"}
+joblib = "*"
+pydantic = "*"
+python-multipart = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.9"

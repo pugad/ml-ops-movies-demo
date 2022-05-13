@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link href="{{ url_for('static', path='/base.css') }}" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+    <h1>Predict the movie revenue!</h1>
+    <div>
+        A demo MLOps project where three models (Linear Regression, Decision Tree Regressor, and Random Forest Regressor) are compared and the best one is used to predict how much gross revenue a movie is estimated to make based on factors such as the initial budget, content rating, number of facebook likes, etc.
+    </div>
+    <br>
+    <div>
+        The model with the best R-squared and RMSE scores (highest and lowest, respectively) is used for the prediction service.
+    </div>
+    <br>
+    <div>
+        Docs:
+    </div>
+    <ul>
+        <li><a href="/api/docs">API public docs</a></li>
+        <li><a href="/docs">FastAPI built-in Swagger UI docs</a></li>
+    </ul>
+    <div>
+        <hr>
+    </div>
+
+    <div>
+        <ul>
+            <div class="section">
+                <li> <b>Re-train the models</b>
+                    <form method="post" action="/train" name="trainForm">
+                        <button class="header-buttons btn btn-primary" type='submit' href="/train">Run pipeline</button>
+                    </form>
+                    <div>
+                        Clicking the button above triggers a re-run of the entire pipeline. It involves the following steps:
+                    </div>
+                    <ul>
+                        <li>Data extraction: {{dataset_source_url}}</li>
+                        <li>Data cleaning and feature engineering</li>
+                        <li>Model training, evaluation, and persistence</li>
+                    </ul>
+                    <div>
+                        When a prediction is requested, the following tasks are done:
+                    </div>
+                    <ul>
+                        <li>Model selection (choosing the model with the best score)</li>
+                        <li>Model loading (getting the model from the registry)</li>
+                        <li>Running the prediction (predict using the loaded model)</li>
+                    </ul>
+                    
+            </div>
+            <code id="trainResponse" class="varname">
+            </code>
+            <div class="section">
+                    <li> <b>Request a prediction of the estimated gross revenue (in USD) of a movie with the following features.</b>
+                    <form method="post" action="/predict" name="predictForm">
+                        <div>
+                            <label for="content_rating">Choose the content rating: </label>
+                            <select id="content_rating" name="content_rating">
+                                <option value="Approved">Approved</option>
+                                <option value="G">G</option>
+                                <option value="GP">GP</option>
+                                <option value="M">M</option>
+                                <option value="NC-17">NC-17</option>
+                                <option value="Not Rated">Not Rated</option>
+                                <option value="PG">PG</option>
+                                <option value="PG-13">PG-13</option>
+                                <option value="Passed">Passed</option>
+                                <option value="R">R</option>
+                                <option value="Unrated">Unrated</option>
+                                <option value="X">X</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="num_voted_users">Number of voted users (imdb ratings): </label>
+                            <input type="number" id="num_voted_users" name="num_voted_users" min="0">
+                        </div>
+                        <div>
+                            <label for="budget_usd">Initial budget (in USD): </label>
+                            <input type="number" id="budget_usd" name="budget_usd" min="0" step="0.01">
+                        </div>
+                        <div>
+                            <label for="duration_mins">Movie duration (in minutes): </label>
+                            <input type="number" id="duration_mins" name="duration_mins" min="0" step="0.01">
+                        </div>
+                        <div>
+                            <label for="title_year">Release Year: </label>
+                            <input type="number" id="title_year" name="title_year" min="0">
+                        </div>
+                        <div>
+                            <label for="director_facebook_likes">Director's number of Facebook likes: </label>
+                            <input type="number" id="director_facebook_likes" name="director_facebook_likes" min="0">
+                        </div>
+                        <div>
+                            <label for="actor_1_facebook_likes">First Actor/Actress's number of Facebook likes: </label>
+                            <input type="number" id="actor_1_facebook_likes" name="actor_1_facebook_likes" min="0">
+                        </div>
+                        <div>
+                            <label for="actor_2_facebook_likes">Second Actor/Actress's number of Facebook likes: </label>
+                            <input type="number" id="actor_2_facebook_likes" name="actor_2_facebook_likes" min="0">
+                        </div>
+                        <div>
+                            <label for="actor_3_facebook_likes">Third Actor/Actress's number of Facebook likes: </label>
+                            <input type="number" id="actor_3_facebook_likes" name="actor_3_facebook_likes" min="0">
+                        </div>
+                        <div>
+                            <label for="cast_total_facebook_likes">Cast's total number of Facebook likes: </label>
+                            <input type="number" id="cast_total_facebook_likes" name="cast_total_facebook_likes" min="0" step="1">
+                        </div>
+                        <button class="header-buttons btn btn-primary" type='submit' href="/predict">Predict</button>
+                    </form>
+                    <code id="predictResponse" class="varname">
+                    </code>
+            </div>
+        </ul>
+    </div>
+    <div>
+        <hr>
+        <div>
+            Developed by: github.com/pugad
+        </div>
+        <div>
+            Movies dataset provided by Thinkful
+        </div>
+    
+    </div>
+</body>
+<script type="text/javascript">
+    function handleSubmit(event) {
+    event.preventDefault();
+    const data = new FormData(event.target);
+
+    const value = JSON.stringify(Object.fromEntries(data.entries()));
+
+    if(event.target.name === "trainForm"){
+        var formName = 'train';
+    }else{
+        var formName = 'predict';
+    }
+    $.ajax({
+        type: "POST",
+        url: "/" + formName,
+        data: value,
+        success: function(response){
+            document.getElementById(formName + "Response").innerText = "Response: " + JSON.stringify(response);
+        },
+        dataType: "json",
+        contentType: "application/json"
+    });
+
+
+    }
+
+    const trainform = document.getElementsByName('trainForm')[0];
+    const predictform = document.getElementsByName('predictForm')[0];
+    trainform.addEventListener('submit', handleSubmit);
+    predictform.addEventListener('submit', handleSubmit);
+
+</script>
+</html>

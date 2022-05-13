@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="{{ url_for('static', path='/base.css') }}" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300&display=swap" rel="stylesheet"> 
+
+</head>
+<body>
+    <h1>Predict the movie revenue: API Documentation</h1>
+    
+    <div>
+        <hr>
+    </div>
+    <div>
+        Available APIs:
+    </div>
+    <div>
+        <ul>
+            <div class="section">
+                <li> <b>Train the model</b>
+                    <ul>
+                        <li> Method: POST
+                        <li> Endpoint: /train
+                        <li> Payload: None
+                        <li> Description: Triggers a new run of the pipeline to extract a new copy of the dataset, train the models, and deploy the best-scoring one.
+                    </ul>    
+            </div>
+            <div class="section">
+                    <li> <b>Request a prediction of the gross revenue a movie might have made or might make.</b>
+                        <ul>
+                            <li> Method: POST
+                            <li> Endpoint: /predict
+                            <li> Payload: JSON
+                            <ul>
+                                <li class="varname"> num_voted_users (int):
+                                    <div class="desc">
+                                        e.g. 1000
+                                    </div>
+                                <li class="varname"> budget_usd (float):
+                                    <div class="desc">
+                                        e.g. 25000000.0
+                                    </div>
+                                <li class="varname"> content_rating (string):
+                                    <div class="desc">
+                                        any of ('Approved', 'G', 'GP', 'M', 'NC-17', 'Not Rated', 'PG', 'PG-13', 'Passed', 'R', 'Unrated' or 'X')
+                                    </div>
+                                <li class="varname"> title_year (int):
+                                <div class="desc">
+                                    e.g. 2018
+                                </div>    
+                                <li class="varname"> duration_mins (float):
+                                    <div class="desc">
+                                        e.g. 150
+                                    </div>
+                                <li class="varname"> director_facebook_likes (int):
+                                <div class="desc">
+                                    e.g. 1000
+                                </div>
+                                <li class="varname"> cast_total_facebook_likes (int):
+                                    <div class="desc">
+                                        e.g. 1000
+                                    </div>
+                                <li class="varname"> actor_1_facebook_likes (int):
+                                    <div class="desc">
+                                        e.g. 1000
+                                    </div>
+                                <li class="varname"> actor_2_facebook_likes (int):
+                                    <div class="desc">
+                                        e.g. 1000
+                                    </div>
+                                <li class="varname"> actor_3_facebook_likes (int):
+                                    <div class="desc">
+                                        e.g. 1000
+                                    </div>
+                            </ul>
+                            <li> Example:
+                                <div>
+                                    <code class="varname">
+                                        {"num_voted_users": 10, "content_rating": "G", "budget_usd": 1000000.0, "title_year": 2010, "duration_mins": 150.0, "actor_3_facebook_likes": 100, "cast_total_facebook_likes": 500, "director_facebook_likes": 50, "actor_1_facebook_likes": 200, "actor_2_facebook_likes": 150}
+                                    </code>
+                                </div>
+            </div>
+            <div class="section">
+            <li> <b>Health check</b>
+                <ul>
+                    <li>
+                        Method:  GET
+                    </li>
+                    <li>
+                        Endpoint: /healthz
+                    </li>
+                </ul>
+            </div>
+        </ul>
+    </div>
+</body>
+</html>

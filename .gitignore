@@ -1,0 +1,7 @@
+*.png
+venv
+.pytest_cache
+__pycache__
+.env
+persist_dir
+reqs.txt

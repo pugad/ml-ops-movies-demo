@@ -1,0 +1,4 @@
+DATASET_SOURCE_URL=https://raw.githubusercontent.com/pugad/predict_the_box_office/master/movie_metadata.csv
+MODEL_RANDOM_STATE=42
+MODEL_BASELINE_R2=0.668
+MODEL_BASELINE_RMSE=43100000
