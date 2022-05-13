@@ -1,13 +1,5 @@
-# Predict a movie's revenue
+# Predict a movie's revenue!
 This project incorporates both the ML pipeline and prediction service to estimate how much revenue a movie will make.
-
-The pipeline covers the data preparation (data extraction, cleaning, feature engineering), training (model training, evaluation, and persistence), and inference phases (choosing the best model to serve predictions). FastAPI is used to build the APIs. Three models are trained and compared: Linear regression, Decision tree regressor, and the Random forest regressor. Then, the model with the best R-squared and RMSE scores is served.
-
-The baseline scores were calculated during development (see references/development/compute_best_comb.py):
-R-squared must be greater than or equal to 0.668
-Root Mean Square Error (RMSE) must be less than or equal to 43,100,000
-
-The original notebook can be found in references/original_notebook_ref.ipynb
 
 ## Try it out
 
@@ -38,7 +30,7 @@ FastAPI Swagger UI Docs: http://localhost:8000/docs
 
 ### Interact with the API
 
-Manually at the homepage: http://localhost:8000/
+Using the UI at the homepage: http://localhost:8000/
 
 Using the FastAPI Swagger UI Docs: http://localhost:8000/docs
 
@@ -54,3 +46,14 @@ Using Python:
 
     # Send a prediction request to /predict
     python .\manualtests\predict_manual.py localhost:8000/predict
+
+# About
+The pipeline covers the data preparation (data extraction, cleaning, feature engineering), training (model training, evaluation, and persistence), and inference phases (choosing the best model to serve predictions). FastAPI is used to build the APIs. Three models are trained and compared: Linear regression, Decision tree regressor, and the Random forest regressor. Then, the model with the best R-squared and RMSE scores is served.
+
+The baseline scores were calculated during development (see *references/development/compute_best_comb.py*):
+- Baseline R-squared: 0.668
+- Baseline Root Mean Square Error (RMSE): 43,100,000
+
+The original development notebook can be found in *references/original_notebook_ref.ipynb*
+
+Credits to Thinkful for the original box office dataset.
