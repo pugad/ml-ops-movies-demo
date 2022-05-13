@@ -1,4 +1,4 @@
-Predict a movie's revenue
+# Predict a movie's revenue
 This project incorporates both the ML pipeline and prediction service to estimate how much revenue a movie will make.
 
 The pipeline covers the data preparation (data extraction, cleaning, feature engineering), training (model training, evaluation, and persistence), and inference phases (choosing the best model to serve predictions). FastAPI is used to build the APIs. Three models are trained and compared: Linear regression, Decision tree regressor, and the Random forest regressor. Then, the model with the best R-squared and RMSE scores is served.
