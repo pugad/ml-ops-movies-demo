@@ -1,11 +1,13 @@
-# ml-ops-movies-demo
-This demo MLOps project uses machine learning to predict a movie's revenue!
+Predict a movie's revenue
+This project incorporates both the ML pipeline and prediction service to estimate how much revenue a movie will make.
 
-The pipeline covers the data preparation (data extraction, cleaning, feature engineering), training (model training, evaluation, and persistence), and inference phases (choosing and serving models for predictions). It trains, evaluates, and compares three models (linear regression, decision tree, random forest) and then serves the model with the best R-squared and RMSE scores based on a baseline standard (see .configs file).
+The pipeline covers the data preparation (data extraction, cleaning, feature engineering), training (model training, evaluation, and persistence), and inference phases (choosing the best model to serve predictions). FastAPI is used to build the APIs. Three models are trained and compared: Linear regression, Decision tree regressor, and the Random forest regressor. Then, the model with the best R-squared and RMSE scores is served.
 
 The baseline scores were calculated during development (see references/development/compute_best_comb.py):
 R-squared must be greater than or equal to 0.668
 Root Mean Square Error (RMSE) must be less than or equal to 43,100,000
+
+The original notebook can be found in references/original_notebook_ref.ipynb
 
 ## Try it out
 
@@ -25,6 +27,7 @@ Spin up the container
 
     docker-compose up -d --build
 
+Note: if you want to see the persisted models and metadata, uncomment the line "./:/usr/src/app" from the docker-compose.yaml file. A "persist_dir" folder should show up in your project directory after you spin up the container.
 
 ### Check out the docs
 
